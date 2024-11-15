@@ -88,6 +88,9 @@ data = [
     }
 ]
 
+# Lista de universidades
+universidades = ["Universidad de Madrid", "Universidad de Barcelona", "Universidad de Valencia", "Universidad de Sevilla"]
+
 # Convertir JSON a DataFrame
 df = pd.DataFrame(data)
 
@@ -108,3 +111,14 @@ if selected_indices:
     st.dataframe(selected_rows)
 else:
     st.write("No se han seleccionado trabajadores.")
+
+# Botón para asignar universidades
+if st.button("Asignar Universidades"):
+    if selected_indices:
+        st.write("Asignar universidades a los trabajadores seleccionados:")
+        for index in selected_indices:
+            trabajador = df.loc[index]
+            universidades_seleccionadas = st.multiselect(f"Selecciona universidades para {trabajador['DisplayName']}", universidades, key=index)
+            st.write(f"{trabajador['DisplayName']} asignado a {', '.join(universidades_seleccionadas)}")
+    else:
+        st.write("No se han seleccionado trabajadores para asignar universidades.")
